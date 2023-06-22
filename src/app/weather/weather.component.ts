@@ -50,6 +50,7 @@ export class WeatherComponent implements OnInit {
   ];
   selectedCity: string = '';
   weatherData: any;
+  selectedUnit: string = 'celsius';
   error: string = '';
 
   constructor(private weatherService: WeatherService) { }
@@ -64,6 +65,7 @@ export class WeatherComponent implements OnInit {
       .subscribe(
         data => {
           this.weatherData = data;
+          this.convertTemperature();
           this.error = '';
         },
         error => {
@@ -75,5 +77,27 @@ export class WeatherComponent implements OnInit {
 
   onCitySelect() {
     this.getWeatherData(this.selectedCity);
+  }
+
+  onUnitSelect() {
+    this.convertTemperature();
+  }
+
+  convertTemperature() {
+    if (this.weatherData) {
+      const temperature = this.weatherData.main.temp;
+
+      if (this.selectedUnit === 'celsius') {
+        this.weatherData.main.temp_celsius = Math.round(temperature - 273.15);
+        this.weatherData.main.temp_fahrenheit = Math.round(
+          this.weatherData.main.temp_celsius * (9 / 5) + 32
+        );
+      } else {
+        this.weatherData.main.temp_fahrenheit = Math.round(temperature * (9 / 5) - 459.67);
+        this.weatherData.main.temp_celsius = Math.round(
+          (this.weatherData.main.temp_fahrenheit - 32) * (5 / 9)
+        );
+      }
+    }
   }
 }

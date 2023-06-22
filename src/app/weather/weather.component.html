@@ -5,10 +5,18 @@
     <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
   </select>
 
+  <div class="unit-selection">
+    <input type="radio" id="celsius" name="unit" value="celsius" [(ngModel)]="selectedUnit" (change)="onUnitSelect()">
+    <label for="celsius">Цельсій</label>
+
+    <input type="radio" id="fahrenheit" name="unit" value="fahrenheit" [(ngModel)]="selectedUnit" (change)="onUnitSelect()">
+    <label for="fahrenheit">Фаренгейт</label>
+  </div>
+
   <div *ngIf="weatherData">
     <h3>{{ selectedCity }}</h3>
     <ul>
-      <li>Температура: {{ weatherData?.main.temp }} K</li>
+      <li>Температура: {{ selectedUnit === 'celsius' ? weatherData?.main.temp_celsius + '°C' : weatherData?.main.temp_fahrenheit + '°F' }}</li>
       <li>Вологість: {{ weatherData?.main?.humidity }}%</li>
       <li>Швидкість вітру: {{ weatherData?.wind?.speed }} км/год</li>
       <li>Умови погоди: {{ weatherData?.weather[0]?.description }}</li>
