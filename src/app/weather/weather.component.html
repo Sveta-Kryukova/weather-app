@@ -1,0 +1,19 @@
+<div class="weather-container">
+  <h2>Прогноз погоди</h2>
+
+  <select [(ngModel)]="selectedCity" (change)="onCitySelect()">
+    <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+  </select>
+
+  <div *ngIf="weatherData">
+    <h3>{{ selectedCity }}</h3>
+    <ul>
+      <li>Температура: {{ weatherData?.main.temp }} K</li>
+      <li>Вологість: {{ weatherData?.main?.humidity }}%</li>
+      <li>Швидкість вітру: {{ weatherData?.wind?.speed }} км/год</li>
+      <li>Умови погоди: {{ weatherData?.weather[0]?.description }}</li>
+    </ul>
+  </div>
+
+  <div *ngIf="error">{{ error }}</div>
+</div>
