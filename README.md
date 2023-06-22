@@ -1,27 +1,60 @@
 # WeatherApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.0.
+WeatherApp is a simple Angular application that displays weather information for a given location.
 
-## Development server
+Click to try 👉 [DEMO](https://sveta-kryukova.github.io/weather-app/)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Functionality
 
-## Code scaffolding
+✔️Display Weather Data: The application fetches weather data from the OpenWeatherMap API and displays the current weather conditions, including temperature, description.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+✔️City Selection: Users can select a city from a predefined list of cities. The weather data for the selected city is then fetched and displayed.
 
-## Build
+✔️Temperature Conversion: Temperature is displayed in both Celsius and Fahrenheit. Users can switch between the two units.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+✔️Caching: Weather data for each city is cached in the browser's sessionStorage to improve performance. Cached data is used if available, reducing the number of API calls.
 
-## Running unit tests
+✔️Error Handling: If an error occurs while retrieving weather data, an error message is displayed to the user.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Technologies Used
 
-## Running end-to-end tests
+⚫ Angular: A popular JavaScript framework for building web applications.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+⚫ OpenWeatherMap API: An API service used to retrieve weather data.
 
-## Further help
+⚫ HTML: Markup language for structuring the web pages.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+⚫ TypeScript: A statically-typed superset of JavaScript used in Angular development.
+
+⚫ SCSS: CSS preprocessor for adding enhanced features to CSS.
+
+⚫ RxJS: Reactive programming library used for handling asynchronous operations.
+
+⚫ Git: Version control system for tracking changes in the codebase.
+
+⚫ GitHub: Hosting platform for managing and sharing Git repositories.
+
+
+## Getting Started
+
+To get started with WeatherApp, follow these steps:
+
+1. Clone the repository:
+  
+    ```git clone https://github.com/your-username/weather-app.git```
+  
+2. Install the dependencies:
+   
+   ```npm install```
+   
+3. Obtain an API key from OpenWeatherMap API [OpenWeatherMap](https://openweathermap.org/) and replace `<API_KEY>` in `src/app/services/weather.service.ts` with your actual API key.
+   
+4. Build and run the application:
+
+   ```ng serve```
+   
+5. Open the application in your browser at [localhost](http://localhost:4200)
+
+## Contributing
+
+Contributions are welcome! If you have any suggestions or improvements, please create an issue or submit a pull request.
