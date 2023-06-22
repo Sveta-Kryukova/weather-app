@@ -61,18 +61,27 @@ export class WeatherComponent implements OnInit {
   }
 
   getWeatherData(city: string) {
-    this.weatherService.getWeather(city)
-      .subscribe(
-        data => {
-          this.weatherData = data;
-          this.convertTemperature();
-          this.error = '';
-        },
-        error => {
-          this.weatherData = null;
-          this.error = 'Error retrieving weather data. Please try again.';
-        }
-      );
+    const cachedWeatherData = window.sessionStorage.getItem(city);
+  
+    if (cachedWeatherData) {
+      this.weatherData = JSON.parse(cachedWeatherData);
+      this.convertTemperature();
+      this.error = '';
+    } else {
+      this.weatherService.getWeather(city)
+        .subscribe(
+          data => {
+            this.weatherData = data;
+            this.convertTemperature();
+            this.error = '';
+            window.sessionStorage.setItem(city, JSON.stringify(data));
+          },
+          error => {
+            this.weatherData = null;
+            this.error = 'Error retrieving weather data. Please try again.';
+          }
+        );
+    }
   }
 
   onCitySelect() {
