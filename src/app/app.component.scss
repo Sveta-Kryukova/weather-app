@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #e9f7fd, #345);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

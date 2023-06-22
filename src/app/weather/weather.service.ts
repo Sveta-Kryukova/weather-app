@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class WeatherService {
   private apiKey = '17dc71bb4ac06ea33cab56e5935c72a3';
 

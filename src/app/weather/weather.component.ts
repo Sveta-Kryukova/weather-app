@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { WeatherService } from '../weather.service';
+import { WeatherService } from './weather.service';
 
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
-  styleUrls: ['./weather.component.scss']
 })
 export class WeatherComponent implements OnInit {
   cities = [
@@ -48,10 +47,10 @@ export class WeatherComponent implements OnInit {
     "Чернігів",
     "Чернівці"
   ];
-  selectedCity: string = '';
+  selectedCity = '';
   weatherData: any;
-  selectedUnit: string = 'celsius';
-  error: string = '';
+  selectedUnit = 'celsius';
+  error = '';
 
   constructor(private weatherService: WeatherService) { }
 
@@ -61,20 +60,22 @@ export class WeatherComponent implements OnInit {
   }
 
   getWeatherData(city: string) {
-    const cachedWeatherData = window.sessionStorage.getItem(city);
-  
+    const cachedWeatherData = sessionStorage.getItem(city);
+
     if (cachedWeatherData) {
       this.weatherData = JSON.parse(cachedWeatherData);
       this.convertTemperature();
       this.error = '';
     } else {
+
       this.weatherService.getWeather(city)
         .subscribe(
           data => {
             this.weatherData = data;
             this.convertTemperature();
             this.error = '';
-            window.sessionStorage.setItem(city, JSON.stringify(data));
+
+            sessionStorage.setItem(city, JSON.stringify(data));
           },
           error => {
             this.weatherData = null;
@@ -96,17 +97,56 @@ export class WeatherComponent implements OnInit {
     if (this.weatherData) {
       const temperature = this.weatherData.main.temp;
 
-      if (this.selectedUnit === 'celsius') {
-        this.weatherData.main.temp_celsius = Math.round(temperature - 273.15);
-        this.weatherData.main.temp_fahrenheit = Math.round(
-          this.weatherData.main.temp_celsius * (9 / 5) + 32
-        );
-      } else {
-        this.weatherData.main.temp_fahrenheit = Math.round(temperature * (9 / 5) - 459.67);
-        this.weatherData.main.temp_celsius = Math.round(
-          (this.weatherData.main.temp_fahrenheit - 32) * (5 / 9)
-        );
-      }
+      this.weatherData.main.temp_celsius = Math.round(temperature - 273.15);
+
+      this.weatherData.main.temp_fahrenheit = Math.round(
+        this.weatherData.main.temp_celsius * (9 / 5) + 32
+      );
+    }
+  }
+
+  translateWeatherCondition(description: string): string {
+    switch (description) {
+      case 'clear sky':
+        return 'Ясно';
+      case 'few clouds':
+        return 'Небагато хмар';
+      case 'overcast clouds':
+        return 'Хмарно';
+      case 'scattered clouds':
+        return 'Розсіяні хмари';
+      case 'broken clouds':
+        return 'Купчасті хмари';
+      case 'shower rain':
+        return 'Проливний дощ';
+      case 'rain':
+        return 'Дощ';
+      case 'light rain':
+        return 'Невеликий дощ';
+      case 'thunderstorm':
+        return 'Гроза';
+      case 'snow':
+        return 'Сніг';
+      case 'mist':
+        return 'Туман';
+      case 'smoke':
+        return 'Дим';
+      case 'haze':
+        return 'Димка';
+      case 'dust':
+        return 'Пил';
+      case 'fog':
+        return 'Туман';
+      case 'sand':
+        return 'пісок';
+      case 'ash':
+        return 'Попіл';
+      case 'squall':
+        return 'Шквал';
+      case 'tornado':
+        return 'Торнадо';
+      default:
+        return '';
     }
   }
 }

@@ -1,27 +1,30 @@
 <div class="weather-container">
-  <h2>Прогноз погоди</h2>
+  <h2 class="weather-title">Прогноз погоди</h2>
 
-  <select [(ngModel)]="selectedCity" (change)="onCitySelect()">
+  <select class="city-select" [(ngModel)]="selectedCity" (change)="onCitySelect()">
     <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
   </select>
 
   <div class="unit-selection">
     <input type="radio" id="celsius" name="unit" value="celsius" [(ngModel)]="selectedUnit" (change)="onUnitSelect()">
-    <label for="celsius">Цельсій</label>
+    <label for="celsius" class="unit-label">Цельсій</label>
 
     <input type="radio" id="fahrenheit" name="unit" value="fahrenheit" [(ngModel)]="selectedUnit" (change)="onUnitSelect()">
-    <label for="fahrenheit">Фаренгейт</label>
+    <label for="fahrenheit" class="unit-label">Фаренгейт</label>
   </div>
 
-  <div *ngIf="weatherData">
-    <h3>{{ selectedCity }}</h3>
+  <div *ngIf="weatherData" class="weather-info">
+    <h3 class="city-name">{{ selectedCity }}</h3>
     <ul>
-      <li>Температура: {{ selectedUnit === 'celsius' ? weatherData?.main.temp_celsius + '°C' : weatherData?.main.temp_fahrenheit + '°F' }}</li>
-      <li>Вологість: {{ weatherData?.main?.humidity }}%</li>
-      <li>Швидкість вітру: {{ weatherData?.wind?.speed }} км/год</li>
-      <li>Умови погоди: {{ weatherData?.weather[0]?.description }}</li>
+      <li><b>Температура: </b> {{ selectedUnit === 'celsius' ? weatherData?.main.temp_celsius + '°C' : weatherData?.main.temp_fahrenheit + '°F' }}</li>
+
+      <li><b>Вологість: </b>{{ weatherData?.main?.humidity }}%</li>
+
+      <li><b>Швидкість вітру: </b>{{ weatherData?.wind?.speed }} км/год</li>
+
+      <li><b>Погода: </b> {{ translateWeatherCondition(weatherData?.weather[0]?.description) }}</li>
     </ul>
   </div>
 
-  <div *ngIf="error">{{ error }}</div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
 </div>
